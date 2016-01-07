@@ -1,0 +1,227 @@
+﻿@{
+	ViewBag.Title = "Weibo SDK Web Demo";
+}
+
+@section scripts
+{
+	<script src="~/Scripts/jquery.upload.js"></script>
+	<script type="text/template" id="unauthorizedTpl">
+		<div class="panel-body">
+
+			<a href="#" class="btn btn-block btn-warning" id="authorizeBtn"><i class="fa fa-weibo"></i> 登录新浪微博</a>
+
+		</div>
+	</script>
+
+	<script type="text/template" id="authorizedTpl">
+		<div class="panel-body">
+
+			<div class="media">
+				<div class="media-left">
+					<img class="media-object" width="64" src="..." alt="...">
+				</div>
+				<div class="media-body">
+					<h4 class="media-heading">Media heading</h4>
+					<span></span>
+				</div>
+			</div>
+
+		</div>
+	</script>
+
+<script type="text/template" id="statusTpl">
+	<div class="media">
+		<div class="media-left">
+			<img class="media-object" width="64" src="..." alt="...">
+		</div>
+		<div class="media-body">
+			<h4 class="media-heading">Media heading</h4>
+			<span></span>
+		</div>
+	</div>
+</script>
+
+	<script>
+
+		(function () {
+
+			//加载用户最新微博
+			function loadStatuses()
+			{
+				var lst = $('#statuses-lst');
+				lst.html('');
+
+				$.getJSON("/Demo/GetPublicTimeline").done(function (d) {
+					console.log(d);
+					if (d.statuses) {
+						for (var i in d.statuses) {
+							var status = d.statuses[i];
+							var tpl = $($("#statusTpl").html());
+							tpl.find('.media-object').attr('src', status.user.profile_image_url);
+							tpl.find('h4').text(status.user.screen_name);
+							tpl.find('span').text(status.text);
+
+							if (status.thumbnail_pic && status.thumbnail_pic != '') {
+								tpl.find('.media-body').append(($('<p><img src="' + status.thumbnail_pic + '" /></p>')));
+
+							}
+							lst.append(tpl);
+						}
+
+					}
+					else {
+						lst.append("请先登录。");
+					}
+
+
+				});
+			}
+
+			$('#img-btn').click(function (e) {
+				$.upload({
+					// 上传地址
+					url: '/Demo/UploadImage',
+					// 文件域名字
+					fileName: 'file',
+					// 上传完成后, 返回json, text
+					dataType: 'json',
+					// 上传之前回调,return true表示可继续上传
+					onSend: function () {
+						return true;
+					},
+					// 上传之后回调
+					onComplate: function (data) {
+						if (data.success) {
+							$('#post-btn').data('img', data.fileName);
+
+
+							var previewPanel = $('#img-preview');
+
+							previewPanel.find('img').remove();
+
+							previewPanel.append($('<img src="/tmp/' + data.fileName + '" class="img-thumbnail" style="width:140px;" />'));
+
+							previewPanel.css('display', 'block');
+
+						}
+						else {
+							$('#post-btn').removeData('img');
+						}
+					}
+				});
+			});
+
+			$('#post-btn').click(function (e) {
+				var text = $('#status-text').val();
+				var img = $(this).data('img');
+
+				var btn = $(this);
+
+				if (text.trim() == '')
+				{
+					alert('说点什么吧？');
+					return;
+				}
+
+				btn.button('loading');
+
+				//发布微博
+				$.ajax('/Demo/PostStatus', {
+					data: {
+						status: text,
+						img: img
+					},
+					type: 'POST'
+				}).done(function () {
+					$('#post-btn').removeData('img');
+					$('#status-text').val('');
+					var previewPanel = $('#img-preview');
+					previewPanel.find('img').remove();
+					previewPanel.css('display', 'none')
+					loadStatuses();
+				}).fail(function (d) {
+					console.log(d);
+				}).always(function () {
+					btn.button('reset');
+				});
+
+
+			});
+
+			//读取用户信息
+			$.ajax("/Demo/GetUserState", { type: 'POST' }).done(function (d) {
+
+				if (d.authorized === false) {
+					//没有登录	
+					var tpl = $($("#unauthorizedTpl").html());
+					tpl.find('a').attr('href', d.url);
+					var panel = $('#statePanel');
+					panel.append(tpl);
+
+				}
+				else {
+					//已经登录
+					var tpl = $($("#authorizedTpl").html());
+					tpl.find('.media-object').attr('src', d.data.profile_image_url);
+					tpl.find('h4').text(d.data.screen_name);
+					tpl.find('span').text(d.data.description);
+					var panel = $('#statePanel');
+
+					panel.removeClass('panel-danger').addClass('panel-success');
+
+					panel.append(tpl);
+					loadStatuses();
+
+
+				}
+			}).fail(function (e) {
+				console.log(e);
+			});
+
+
+
+
+
+		})();
+
+
+
+
+	</script>	
+}
+
+<div class="col-md-8">
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			今天想说点什么？
+		</div>
+		<div class="panel-body">
+			<textarea class="form-control" style="height:80px;resize:vertical;" id="status-text"></textarea>
+		</div>
+
+		<div class="panel-body" id="img-preview" style="display:none">
+			
+		</div>
+
+		<div class="panel-footer clearfix">
+			<button class="btn btn-success pull-left"><i class="fa fa-image" id="img-btn"></i></button>
+			<button class="btn btn-primary pull-right" data-loading-text="正在发布..."><i class="fa fa-twitter" id="post-btn"></i> 发布</button>
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			最新微博
+		</div>
+		<div class="panel-body" id="statuses-lst">
+
+		</div>
+	</div>
+</div>
+
+<div class="col-md-4">
+	<div class="panel panel-danger" id="statePanel">
+		<div class="panel-heading">
+			登录状态
+		</div>
+	</div>
+</div>

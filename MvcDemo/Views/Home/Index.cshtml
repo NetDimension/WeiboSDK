@@ -1,0 +1,41 @@
+﻿@{
+	ViewBag.Title = "欢迎";
+}
+<img src="~/images/Logo.png" class="img-thumbnail pull-right" style="width:240px; margin:10px;" />
+<h2>欢迎使用WeiboSDK_v3版</h2>
+
+<p>
+	项目地址：<a href="http://weibosdk.codeplex.com">http://weibosdk.codeplex.com</a>
+</p>
+
+
+
+<h3>第一步</h3>
+<p>根据自己的需求修改Web.config中的appKey、appSecret和callbackUrl字段。</p>
+<p>本示例用的callbackUrl为“http://127.0.0.1:4801/Demo/Authorized”，所以如果要顺利运行本示例请讲在新浪微博开放平台中的回调地址也设置成这个。</p>
+<p>
+	<img src="~/images/step1.png" class="img-thumbnail" />
+</p>
+<h3>第二步</h3>
+<p>如果使用IIS Express调试，请自行修改IIS Express的applicationhost.config文件，确保127.0.0.1:&lt;端口&gt;能够访问（因为新浪后台的回调地址可以使用IP地址，但不能使用localhost）。</p>
+<p>applicationhost.config文件在“文档\IISExpress\config”文件夹中。</p>
+<p>找到下列配置项，并添加“&lt;binding protocol="http" bindinginformation="*:4801:127.0.0.1" /&gt;”：</p>
+<textarea style="width:100%; height:200px; resize:vertical;">
+	<site name="MvcDemo" id="18">
+		<application path="/" applicationpool="Clr4IntegratedAppPool">
+			<virtualdirectory path="/" physicalpath="D:\Users\Anderson\Documents\Visual Studio 2012\Projects\weibosdk\WeiboSDK_GoodByeEdition\MvcDemo" />
+		</application>
+		<bindings>
+			<binding protocol="http" bindinginformation="*:4801:127.0.0.1" />
+			<!--添加上面这行，确保127.0.0.1:4801能够访问-->
+			<binding protocol="http" bindinginformation="*:4801:localhost" />
+		</bindings>
+	</site>
+</textarea>
+<p>另外，如果访问http://127.0.0.1:4801返回Bad Request错误的话，请用管理员权限运行你的VS.</p>
+<h3>第三步</h3>
+<p>
+	<a href="/Demo/">点这里开始运行Demo</a>
+</p>
+<p>如果授权成功，程序会将获取到的access token及当前登录用户的uid暂存到cookie中。</p>
+

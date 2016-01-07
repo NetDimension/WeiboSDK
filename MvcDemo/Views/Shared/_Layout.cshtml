@@ -1,0 +1,45 @@
+﻿@{
+	Layout = null;
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<title>@ViewBag.Title -  WeiboSDK Web Demo</title>
+	
+	<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+	<link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+	<link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+	<link href="~/Content/site.css" rel="stylesheet" />
+	<script src="~/Scripts/jquery-2.1.4.min.js"></script>
+	<script src="~/Scripts/bootstrap.js"></script>
+
+	<script src="~/Scripts/_references.js"></script>
+</head>
+<body>
+	<nav class="navbar navbar-default">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="http://weibosdk.codeplex.com" target="_blank">
+					<i class="fa fa-weibo text-danger"></i> Weibo SDK Web Demo
+				</a>
+			</div>
+		</div>
+	</nav>
+	<div class="container">
+		@RenderBody()
+	</div>
+
+	<footer class="container-fluid">
+		<div class="container">
+			版权所有 &copy; Net Dimension Studio 2015 保留所有权利。
+		</div>
+
+	</footer>
+
+	@RenderSection("scripts", false)
+</body>
+</html>
