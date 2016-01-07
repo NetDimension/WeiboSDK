@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetDimension.OpenAuth", "NetDimension.OpenAuth\NetDimension.OpenAuth.csproj", "{38B68338-7FC0-4AB7-B8A7-674E0BCBF899}"
 EndProject
@@ -24,34 +24,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinformDemo", "WinformDemo\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcDemo", "MvcDemo\MvcDemo.csproj", "{C4F823E1-D35F-4B93-9AB8-B2D9D64C15FD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "git", "git", "{02324A68-AE36-4843-9473-C1EAC6C3EDDB}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 8
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs25
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = NetDimension.OpenAuth\\NetDimension.OpenAuth.csproj
-		SccProjectName1 = NetDimension.OpenAuth
-		SccLocalPath1 = NetDimension.OpenAuth
-		SccProjectUniqueName2 = NetDimension.OpenAuth.Sina\\NetDimension.OpenAuth.Sina.csproj
-		SccProjectName2 = NetDimension.OpenAuth.Sina
-		SccLocalPath2 = NetDimension.OpenAuth.Sina
-		SccProjectUniqueName3 = NetDimension.OpenAuth.Tencent\\NetDimension.OpenAuth.Tencent.csproj
-		SccProjectName3 = NetDimension.OpenAuth.Tencent
-		SccLocalPath3 = NetDimension.OpenAuth.Tencent
-		SccProjectUniqueName4 = ConsoleDemo\\ConsoleDemo.csproj
-		SccProjectName4 = ConsoleDemo
-		SccLocalPath4 = ConsoleDemo
-		SccProjectUniqueName5 = NetDimension.OpenAuth.Winform\\NetDimension.OpenAuth.Winform.csproj
-		SccProjectName5 = NetDimension.OpenAuth.Winform
-		SccLocalPath5 = NetDimension.OpenAuth.Winform
-		SccProjectUniqueName6 = WinformDemo\\WinformDemo.csproj
-		SccProjectName6 = WinformDemo
-		SccLocalPath6 = WinformDemo
-		SccProjectUniqueName7 = MvcDemo\\MvcDemo.csproj
-		SccProjectName7 = MvcDemo
-		SccLocalPath7 = MvcDemo
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
