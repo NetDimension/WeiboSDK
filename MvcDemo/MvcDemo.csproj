@@ -166,6 +166,7 @@
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Icon.png" />
     <Content Include="images\Logo.png" />
+    <Content Include="images\qrcode.jpg" />
     <Content Include="images\step1.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
